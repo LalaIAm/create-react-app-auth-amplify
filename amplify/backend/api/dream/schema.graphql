@@ -1,0 +1,27 @@
+type User @model {
+  id: ID!
+  name: String!
+  bio: String
+  dreams: [Dream] @connection(name: "UserDreams")
+  journals: [Journal] @connection(name: "UserJournals")
+}
+type Dream @model {
+  id: ID!
+  title: String!
+  date: AWSDate
+  details: String
+  rating: Int
+  keywords: [String]
+  star: Boolean
+  user: User @connection(name: "UserDreams")
+  journalRefs: Journal @connection(name: "DreamRef")
+}
+type Journal @model{
+  id: ID!
+  owner: User @connection(name: "UserJournals")
+  title: String!
+  body: String
+  keywords: [String]
+  dreamRef: [Dream] @connection(name: "DreamRef")
+  date: AWSDate
+}
